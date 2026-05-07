@@ -76,14 +76,3 @@ First, the user opens the app and chooses whether to add a new item or view exis
 
 The user can then go to the View Items screen to see all saved posts. The filter option helps users search items based on category, such as electronics, pets, wallets, or other item types. If an item has been returned to the owner, the user can delete the advert from the list.
 
-## Future Improvements
-
-In the future, this app can be improved by adding more advanced features. A login system could be added so that each user can manage their own posts. Cloud storage could also be used to store data online instead of only on the local device. Map support could help users mark the exact location where the item was lost or found. Push notifications could also be added to alert users when a matching item is posted.
-
-## Learning Outcome
-
-This project helped me understand how to build an Android application using Kotlin and XML. It also helped me learn how to use SQLite for local data storage, how to move between different activities, how to handle user input, and how to display saved data in the app.
-
-## Author
-
-Akash Reddy Gajjala
