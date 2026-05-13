@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
-        android:label="LostFoundApp"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Lost and Found"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LostFoundApp">
 
-        <activity android:name=".ItemDetailActivity" />
-        <activity android:name=".ShowItemsActivity" />
-        <activity android:name=".CreateAdvertActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC2Y3wDThNC3loAHF7Q2X_kOJxIHMsp4ao" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ItemDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ShowItemsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateAdvertActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"

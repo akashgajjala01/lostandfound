@@ -4,19 +4,27 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="#FFFFFF">
 
     <Button
         android:id="@+id/btnCreateAdvert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CREATE A NEW ADVERT" />
+        android:text="CREATE NEW ADVERT"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/btnShowItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="SHOW ALL LOST &amp; FOUND ITEMS" />
+        android:text="SHOW ALL LOST &amp; FOUND ITEMS"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnShowMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SHOW ON MAP" />
 
 </LinearLayout>

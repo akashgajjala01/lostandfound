@@ -2,7 +2,10 @@ package com.example.lostfoundapp
 
 import android.net.Uri
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class ItemDetailActivity : AppCompatActivity() {
@@ -18,6 +21,7 @@ class ItemDetailActivity : AppCompatActivity() {
     private lateinit var btnRemove: Button
 
     private lateinit var databaseHelper: DatabaseHelper
+
     private var advertId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +44,9 @@ class ItemDetailActivity : AppCompatActivity() {
 
         if (advertId != -1) {
             loadAdvertDetails(advertId)
+        } else {
+            Toast.makeText(this, "Advert not found", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         btnRemove.setOnClickListener {
@@ -49,7 +56,7 @@ class ItemDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "Advert removed", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(this, "Could not remove advert", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to remove advert", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -59,18 +66,25 @@ class ItemDetailActivity : AppCompatActivity() {
 
         if (advert != null) {
             detailTitle.text = advert.name
-            detailType.text = "Type: ${advert.type}"
+            detailType.text = "Type: ${advert.postType}"
             detailCategory.text = "Category: ${advert.category}"
             detailPhone.text = "Phone: ${advert.phone}"
             detailDescription.text = "Description: ${advert.description}"
             detailLocation.text = "Location: ${advert.location}"
-            detailDate.text = "Posted: ${advert.dateTime}"
+            detailDate.text = "Posted: ${advert.date}"
 
             try {
-                detailImage.setImageURI(Uri.parse(advert.imageUri))
+                if (advert.imageUri.isNotEmpty()) {
+                    detailImage.setImageURI(Uri.parse(advert.imageUri))
+                } else {
+                    detailImage.setImageResource(android.R.drawable.ic_menu_gallery)
+                }
             } catch (e: Exception) {
                 detailImage.setImageResource(android.R.drawable.ic_menu_gallery)
             }
+        } else {
+            Toast.makeText(this, "Advert details not found", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 }

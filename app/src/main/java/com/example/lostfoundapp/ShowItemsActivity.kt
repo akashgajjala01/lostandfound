@@ -2,7 +2,11 @@ package com.example.lostfoundapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 
 class ShowItemsActivity : AppCompatActivity() {
@@ -10,19 +14,7 @@ class ShowItemsActivity : AppCompatActivity() {
     private lateinit var spinnerFilter: Spinner
     private lateinit var listViewItems: ListView
     private lateinit var databaseHelper: DatabaseHelper
-
-    private var advertList = ArrayList<Advert>()
-
-    private val filterCategories = arrayOf(
-        "All",
-        "Electronics",
-        "Pets",
-        "Wallets",
-        "Keys",
-        "Documents",
-        "Bags",
-        "Other"
-    )
+    private lateinit var advertList: ArrayList<Advert>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +24,34 @@ class ShowItemsActivity : AppCompatActivity() {
         listViewItems = findViewById(R.id.listViewItems)
         databaseHelper = DatabaseHelper(this)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, filterCategories)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerFilter.adapter = adapter
+        val categories = arrayOf(
+            "All",
+            "Electronics",
+            "Pets",
+            "Wallet",
+            "Bag",
+            "Keys",
+            "Other"
+        )
+
+        val spinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            categories
+        )
+
+        spinnerFilter.adapter = spinnerAdapter
+
+        loadAllAdverts()
 
         spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
-                view: android.view.View?,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
-                val selectedCategory = filterCategories[position]
+                val selectedCategory = categories[position]
 
                 advertList = if (selectedCategory == "All") {
                     databaseHelper.getAllAdverts()
@@ -54,11 +62,13 @@ class ShowItemsActivity : AppCompatActivity() {
                 listViewItems.adapter = AdvertAdapter(this@ShowItemsActivity, advertList)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
         }
 
         listViewItems.setOnItemClickListener { _, _, position, _ ->
             val advert = advertList[position]
+
             val intent = Intent(this, ItemDetailActivity::class.java)
             intent.putExtra("advert_id", advert.id)
             startActivity(intent)
@@ -68,6 +78,12 @@ class ShowItemsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        if (::databaseHelper.isInitialized) {
+            loadAllAdverts()
+        }
+    }
+
+    private fun loadAllAdverts() {
         advertList = databaseHelper.getAllAdverts()
         listViewItems.adapter = AdvertAdapter(this, advertList)
     }

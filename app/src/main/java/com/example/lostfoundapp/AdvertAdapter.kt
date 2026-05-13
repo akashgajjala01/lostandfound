@@ -5,7 +5,9 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
 
 class AdvertAdapter(
     private val context: Context,
@@ -35,12 +37,16 @@ class AdvertAdapter(
 
         val advert = advertList[position]
 
-        itemTitle.text = "${advert.type}: ${advert.name}"
+        itemTitle.text = "${advert.postType}: ${advert.name}"
         itemCategory.text = "Category: ${advert.category}"
-        itemDate.text = "Posted: ${advert.dateTime}"
+        itemDate.text = "Posted: ${advert.date}"
 
         try {
-            itemImage.setImageURI(Uri.parse(advert.imageUri))
+            if (advert.imageUri.isNotEmpty()) {
+                itemImage.setImageURI(Uri.parse(advert.imageUri))
+            } else {
+                itemImage.setImageResource(android.R.drawable.ic_menu_gallery)
+            }
         } catch (e: Exception) {
             itemImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
